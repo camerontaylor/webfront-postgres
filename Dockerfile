@@ -4,7 +4,7 @@ MAINTAINER Cameron Taylor <cameron.taylor@webfrontgears.com>
 
 RUN buildDependencies="make curl ca-certificates postgresql-server-dev-$PG_MAJOR unzip" \
   && apt-get update \
-  && apt-get install -y --no-install-recommends ${buildDependencies} \
+  && apt-get install -y --no-install-recommends postgresql-$PG_MAJOR-mysql-fdw ${buildDependencies} \
   && mkdir -p /tmp/build \
   && curl -o /tmp/build/pg_datatype_password.zip -SL "https://github.com/ozum/pg_datatype_password/archive/master.zip" \
   && cd /tmp/build/ \
