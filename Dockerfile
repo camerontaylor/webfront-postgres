@@ -1,4 +1,4 @@
-FROM camerontaylor/postgres-plv8:9.6-2.1
+FROM camerontaylor/postgres-plv8:12-3
 
 MAINTAINER Cameron Taylor <cameron.taylor@webfrontgears.com>
 
@@ -6,6 +6,17 @@ RUN buildDependencies="make curl build-essential ca-certificates postgresql-serv
   && apt-get update \
   && apt-get install -y --no-install-recommends postgresql-$PG_MAJOR-mysql-fdw ${buildDependencies} \
   && mkdir -p /tmp/build \
+  && curl -o /tmp/build/pgsql-tweaks-master.zip -SL "https://gitlab.com/sjstoelting/pgsql-tweaks/-/archive/master/pgsql-tweaks-master.zip" \
+  && cd /tmp/build/ \
+  && unzip pgsql-tweaks-master.zip \
+  && cd pgsql-tweaks-master \
+  && make install \
+  && curl -o /tmp/build/pgddl.zip -SL "https://github.com/lacanoid/pgddl/archive/master.zip" \
+  && cd /tmp/build/ \
+  && unzip pgddl.zip \
+  && cd pgddl-master \
+  && make install \
+  && make install installcheck \
   && curl -o /tmp/build/pg_datatype_password.zip -SL "https://github.com/ozum/pg_datatype_password/archive/master.zip" \
   && cd /tmp/build/ \
   && unzip pg_datatype_password.zip \
